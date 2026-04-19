@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<img src="https://i.ibb.co/QjkHTgJk/unnamed.png"
+     alt="Workplace"
+     usemap="#workmap"
+     width="629"
+     height="407">
+
+<map name="workmap">
+  <area shape="rect"
+        coords="476,32,512,123"
+        id="toggleButton">
+
+  <area shape="poly"
+        coords="119,241,160,279,194,271,177,302,173,368,150,299"
+        id="toggleButton1">
+
+  <area shape="poly"
+        coords="595,201,528,193,416,142,486,137,583,173"
+        id="toggleButton2">
+        
+  <area shape="rect"
+        coords="302,250,362,274"
+        class="toggleButton3">
+        
+  <area shape="rect"
+        coords="116,181,208,205"
+        class="toggleButton3">
+  
+  <area shape="circle"
+        coords="239,347,19"
+        class="toggleButton4">
+
+<area shape="circle"
+        coords="316,326,19"
+        class="toggleButton4">
+
+<area shape="poly"
+       coords="424,321,206,264,16,161,119,174,117,182,199,208,211,206,275,224,315,244,297,249,350,274,367,271"
+       id="toggleButton5">
+
+
+      
+</map>
+
+<p id="toggledParagraph" hidden>
+  This is the paragraph about the Tail control
+</p>
+
+<p id="toggledParagraph1" hidden>
+  This is the paragraph about the propeller
+</p>
+
+<p id="toggledParagraph2" hidden>
+  This is the paragraph about the tail
+</p>
+
+<p id="toggledParagraph3" hidden>
+  This is a paragraph about the aerilon
+</p>
+
+<p id="toggledParagraph4" hidden>
+  This is a paragraph about the wheel
+</p>
+
+<p id="toggledParagraph5" hidden>
+  This is a paragraph about the wing
+</p>
+
+<script>
+  document.getElementById('toggleButton').addEventListener('click', e => {
+    e.preventDefault();
+    document.getElementById('toggledParagraph').toggleAttribute('hidden');
+  });
+
+  document.getElementById('toggleButton1').addEventListener('click', e => {
+    e.preventDefault();
+    document.getElementById('toggledParagraph1').toggleAttribute('hidden');
+  });
+
+  document.getElementById('toggleButton2').addEventListener('click', e => {
+    e.preventDefault();
+    document.getElementById('toggledParagraph2').toggleAttribute('hidden');
+  });
+
+  document.querySelectorAll('.toggleButton3').forEach(area => {
+    area.addEventListener('click', e => {
+      e.preventDefault();
+      document
+        .getElementById('toggledParagraph3')
+        .toggleAttribute('hidden');
+    });
+  });
+  document.querySelectorAll('.toggleButton4').forEach(area => {
+    area.addEventListener('click', e => {
+      e.preventDefault();
+      document
+      .getElementById('toggledParagraph4')
+      .toggleAttribute('hidden');
+    });
+  });
+
+document.getElementById('toggleButton5').addEventListener('click', e => {
+    e.preventDefault();
+    document.getElementById('toggledParagraph5').toggleAttribute('hidden');
+  });
+
+</script>
+
+
+</body>
+</html>
+
