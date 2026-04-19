@@ -158,9 +158,9 @@ async function runBackgroundLoop() {
       DX = x- shadowX;
       DY = y- shadowY;
       distance =Math.sqrt(DX*DX+DY*DY);
-      shadowX += (DX/distance)*speed*((score/10)+1);
-      shadowY += (DY/distance)*speed*((score/10)+1);
-      if (distance<speed) {
+      shadowX += (DX/distance)*speed*Math.max(((score/10)+1), 0.5);
+      shadowY += (DY/distance)*speed*Math.max(((score/10)+1), 0.5);
+      if ((shadowX-40<x)&&(shadowX+40>x)&&(shadowY-18<y)&&(shadowY+18>y)) {
         score=score-1; randomizeHoop(); 
     x=30; y=280; shadowX=420; shadowY=280;
    document.getElementById("playerScore").textContent=score;
@@ -176,14 +176,3 @@ async function runBackgroundLoop() {
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
