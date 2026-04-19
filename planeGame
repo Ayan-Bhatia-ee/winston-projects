@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+#main_image {
+    position: relative; 
+}
+
+#main_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+    z-index: 1;
+}
+
+#overlay_image {
+    position: absolute;
+    left: 30px;
+    top: 280px;
+    width: 40px;
+    z-index: 3;
+}
+
+#overlay_image2 {
+    position: absolute;
+    left: 420px;
+    top: 280px;
+    width:40px;
+    z-index: 5;
+}
+
+#overlay_image3 {
+  position: absolute;
+  z-index: 4;
+  width:80px;
+}
+
+#overlay_image4 {
+  position: absolute;
+  z-index: 2;
+  width:80px;
+}
+
+.Plane {
+    width: 40px;
+}
+
+.ShadowPlane {
+  width: 40px;
+}
+
+.Hooptop {
+  width: 80px;
+}
+
+.Hoopbottom {
+  width: 80px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="main_image">
+  <img src="https://i.ibb.co/m5yB0d98/landscape.avif">
+  
+  <div id="overlay_image">
+    <img class="Plane" src="https://i.ibb.co/27yv4v4L/plane-removebg-preview.png">
+  </div>
+
+  <div id="overlay_image2">
+    <img class="ShadowPlane" src="https://i.ibb.co/N626hQtt/image-removebg-preview.png">
+  </div>
+
+  <div id="overlay_image3">
+    <img class="Hooptop" src="https://i.ibb.co/0PJd2TB/ring1.png">
+  </div>
+
+  <div id="overlay_image4">
+    <img class="Hoopbottom" src="https://i.ibb.co/C5P9m94V/ring2.png">
+  </div>
+
+</div>
+<h1 id= "playerScore"> 0</h1>
+<h1> player score </h1>
+
+<script>
+
+// plane movement
+const plane = document.getElementById("overlay_image");
+let x = 30;
+let y = 280;
+const speed = 10;
+let score=0;
+let hoopX=0;
+let hoopY=0;
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "w") y -= speed;
+    if ((event.key === "a")&&!((hoopX+65<x)&&(x<hoopX+80)&&(y>hoopY)&&(y<hoopY+30)))   x -= speed;
+    if ((event.key === "s")&&!((hoopX-15<x)&&(x<hoopX+70)&&(y<hoopY)&&(y>hoopY-30))) y +=speed;
+    if ((event.key === "d")&&!((hoopX-40<x)&&(x<hoopX+5)&&(y>hoopY)&&(y<hoopY+30)))   x += speed;
+
+  if ((hoopX-10<x)&&(x<hoopX+75)&&(y<hoopY-5)&&(y>hoopY-16)) {
+    score=score+1; randomizeHoop(); 
+    x=30; y=280; shadowX=420; shadowY=280;
+    document.getElementById("playerScore").textContent=score;
+  }
+    plane.style.left = x + "px";
+    plane.style.top = y + "px";
+
+
+  
+});
+
+
+
+// RANDOM HOOP PLACEMENT
+const hoopTop = document.getElementById("overlay_image3");
+const hoopBottom = document.getElementById("overlay_image4");
+const gameArea = document.getElementById("main_image");
+
+function randomizeHoop() {
+    const areaWidth = gameArea.offsetWidth;
+    const areaHeight = gameArea.offsetHeight;
+
+    const randomX = Math.floor(Math.random() * (areaWidth - 100));
+    const randomY = Math.floor(Math.random() * (areaHeight - 100));
+    hoopX=randomX;
+    hoopY=randomY;
+    hoopTop.style.left = randomX + "px";
+    hoopTop.style.top = randomY + "px";
+
+    hoopBottom.style.left = randomX + "px";
+    hoopBottom.style.top = (randomY + 10) + "px";
+}
+
+// run once when page loads
+window.onload = randomizeHoop;
+
+//shadowPlane movement 
+const ShadowPlane = document.getElementById("overlay_image2");
+let shadowX = 420;
+let shadowY = 280;
+let slope = 0;
+let DX = 0;
+let DY = 0;
+let distance = 0;
+
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+async function runBackgroundLoop() {
+    while (true) {
+      await sleep(500); 
+      slope= (y-shadowY)/(x-shadowX);
+      DX = x- shadowX;
+      DY = y- shadowY;
+      distance =Math.sqrt(DX*DX+DY*DY);
+      shadowX += (DX/distance)*speed*((score/10)+1);
+      shadowY += (DY/distance)*speed*((score/10)+1);
+      if (distance<speed) {
+        score=score-1; randomizeHoop(); 
+    x=30; y=280; shadowX=420; shadowY=280;
+   document.getElementById("playerScore").textContent=score;
+      }
+      
+      ShadowPlane.style.left = shadowX + "px";
+      ShadowPlane.style.top = shadowY + "px";
+    }
+} runBackgroundLoop();
+
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
