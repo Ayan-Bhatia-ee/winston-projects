@@ -91,8 +91,8 @@
 
 // plane movement
 const plane = document.getElementById("overlay_image");
-let x = 30;
-let y = 280;
+let x = 0;
+let y = gameArea.offsetHeight;
 const speed = 10;
 let score=0;
 let hoopX=0;
@@ -105,9 +105,22 @@ document.addEventListener("keydown", function(event) {
     if ((event.key === "d")&&!((hoopX-40<x)&&(x<hoopX+5)&&(y>hoopY)&&(y<hoopY+30)))   x += speed;
 
   if ((hoopX-10<x)&&(x<hoopX+75)&&(y<hoopY-5)&&(y>hoopY-16)) {
-    score=score+1; randomizeHoop(); 
-    x=30; y=280; shadowX=420; shadowY=280;
+    score=score+1; randomizeHoop(); GameRestart();
+  
     document.getElementById("playerScore").textContent=score;
+  }
+ //image walls 
+  if (x+40>=gameArea.offsetWidth){
+    x=gameArea.offsetWidth-40;
+  }
+  if (y+30>=gameArea.offsetHeight){
+    y=gameArea.offsetHeight-30;
+  }
+  if (x<=0){
+    x=0;
+  }
+  if (y<=0){
+    y=0;
   }
     plane.style.left = x + "px";
     plane.style.top = y + "px";
@@ -115,7 +128,12 @@ document.addEventListener("keydown", function(event) {
 
   
 });
-
+function GameRestart(){
+  x=0;
+  y=gameArea.offsetHeight-40;
+  shadowX=gameArea.offsetWidth-30;
+  shadowY=gameArea.offsetHeight-40;
+}
 
 
 // RANDOM HOOP PLACEMENT
@@ -143,8 +161,8 @@ window.onload = randomizeHoop;
 
 //shadowPlane movement 
 const ShadowPlane = document.getElementById("overlay_image2");
-let shadowX = 420;
-let shadowY = 280;
+let shadowX = gameArea.offsetWidth-30;
+let shadowY = gameArea.offsetHeight-40;
 let slope = 0;
 let DX = 0;
 let DY = 0;
@@ -162,8 +180,8 @@ async function runBackgroundLoop() {
       shadowY += (DY/distance)*speed*Math.max(((score/10)+1), 0.5);
       if ((shadowX-40<x)&&(shadowX+40>x)&&(shadowY-18<y)&&(shadowY+18>y)) {
         score=score-1; randomizeHoop(); 
-    x=30; y=280; shadowX=420; shadowY=280;
-   document.getElementById("playerScore").textContent=score;
+        GameRestart();
+        document.getElementById("playerScore").textContent=score;
       }
       
       ShadowPlane.style.left = shadowX + "px";
@@ -176,3 +194,6 @@ async function runBackgroundLoop() {
 
 </body>
 </html>
+
+
+
