@@ -88,27 +88,35 @@
 <h1> player score </h1>
 
 <script>
+const gameArea = document.getElementById("main_image");
 
 // plane movement
 const plane = document.getElementById("overlay_image");
 let x = 0;
-let y = gameArea.offsetHeight;
+let y = gameArea.offsetHeight-40;
 const speed = 10;
 let score=0;
 let hoopX=0;
 let hoopY=0;
+
+function planeRefresh(){
+  plane.style.left = x + "px";
+  plane.style.top = y + "px";
+}
+planeRefresh();
 
 document.addEventListener("keydown", function(event) {
     if (event.key === "w") y -= speed;
     if ((event.key === "a")&&!((hoopX+65<x)&&(x<hoopX+80)&&(y>hoopY)&&(y<hoopY+30)))   x -= speed;
     if ((event.key === "s")&&!((hoopX-15<x)&&(x<hoopX+70)&&(y<hoopY)&&(y>hoopY-30))) y +=speed;
     if ((event.key === "d")&&!((hoopX-40<x)&&(x<hoopX+5)&&(y>hoopY)&&(y<hoopY+30)))   x += speed;
-
+// scoring
   if ((hoopX-10<x)&&(x<hoopX+75)&&(y<hoopY-5)&&(y>hoopY-16)) {
-    score=score+1; randomizeHoop(); GameRestart();
-  
+    score=score+1; randomizeHoop(); 
+    x=0; y=gameArea.offsetHeight-40; shadowX=gameArea.offsetWidth-30; shadowY=gameArea.offsetHeight-40;
     document.getElementById("playerScore").textContent=score;
   }
+  
  //image walls 
   if (x+40>=gameArea.offsetWidth){
     x=gameArea.offsetWidth-40;
@@ -120,26 +128,21 @@ document.addEventListener("keydown", function(event) {
     x=0;
   }
   if (y<=0){
-    y=0;
+    y=0; 
+ 
   }
-    plane.style.left = x + "px";
-    plane.style.top = y + "px";
+    planeRefresh();
 
 
   
 });
-function GameRestart(){
-  x=0;
-  y=gameArea.offsetHeight-40;
-  shadowX=gameArea.offsetWidth-30;
-  shadowY=gameArea.offsetHeight-40;
-}
+
 
 
 // RANDOM HOOP PLACEMENT
 const hoopTop = document.getElementById("overlay_image3");
 const hoopBottom = document.getElementById("overlay_image4");
-const gameArea = document.getElementById("main_image");
+
 
 function randomizeHoop() {
     const areaWidth = gameArea.offsetWidth;
@@ -180,8 +183,8 @@ async function runBackgroundLoop() {
       shadowY += (DY/distance)*speed*Math.max(((score/10)+1), 0.5);
       if ((shadowX-40<x)&&(shadowX+40>x)&&(shadowY-18<y)&&(shadowY+18>y)) {
         score=score-1; randomizeHoop(); 
-        GameRestart();
-        document.getElementById("playerScore").textContent=score;
+    x=0; y=gameArea.offsetHeight-40; shadowX=gameArea.offsetWidth-40; shadowY=gameArea.offsetHeight-30;
+   document.getElementById("playerScore").textContent=score;
       }
       
       ShadowPlane.style.left = shadowX + "px";
@@ -194,6 +197,7 @@ async function runBackgroundLoop() {
 
 </body>
 </html>
+
 
 
 
