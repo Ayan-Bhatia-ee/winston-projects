@@ -98,6 +98,7 @@ const speed = 10;
 let score=0;
 let hoopX=0;
 let hoopY=0;
+let gameStart=false;
 
 function planeRefresh(){
   plane.style.left = x + "px";
@@ -112,7 +113,7 @@ document.addEventListener("keydown", function(event) {
     if ((event.key === "d")&&!((hoopX-40<x)&&(x<hoopX+5)&&(y>hoopY)&&(y<hoopY+30)))   x += speed;
 // scoring
   if ((hoopX-10<x)&&(x<hoopX+75)&&(y<hoopY-5)&&(y>hoopY-16)) {
-    score=score+1; randomizeHoop(); 
+    score=score+1; randomizeHoop(); gameStart=true;
     x=0; y=gameArea.offsetHeight-40; shadowX=gameArea.offsetWidth-30; shadowY=gameArea.offsetHeight-40;
     document.getElementById("playerScore").textContent=score;
   }
@@ -176,11 +177,13 @@ async function runBackgroundLoop() {
     while (true) {
       await sleep(500); 
       slope= (y-shadowY)/(x-shadowX);
-      DX = x- shadowX;
-      DY = y- shadowY;
-      distance =Math.sqrt(DX*DX+DY*DY);
-      shadowX += (DX/distance)*speed*Math.max(((score/10)+1), 0.5);
-      shadowY += (DY/distance)*speed*Math.max(((score/10)+1), 0.5);
+      if (gameStart){
+        DX = x- shadowX;
+        DY = y- shadowY;
+        distance =Math.sqrt(DX*DX+DY*DY);
+        shadowX += (DX/distance)*speed*Math.max(((score/10)+1), 0.5);
+        shadowY += (DY/distance)*speed*Math.max(((score/10)+1), 0.5);
+      }
       if ((shadowX-40<x)&&(shadowX+40>x)&&(shadowY-18<y)&&(shadowY+18>y)) {
         score=score-1; randomizeHoop(); 
     x=0; y=gameArea.offsetHeight-40; shadowX=gameArea.offsetWidth-40; shadowY=gameArea.offsetHeight-30;
@@ -197,7 +200,6 @@ async function runBackgroundLoop() {
 
 </body>
 </html>
-
 
 
 
