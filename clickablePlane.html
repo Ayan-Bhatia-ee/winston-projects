@@ -86,24 +86,48 @@
 </div>
 
 <script>
+    function hideAll(skip){
+        if (skip!==0){
+            document.getElementById('toggledParagraph').hidden=true;
+        }
+        if (skip!==1){
+            document.getElementById('toggledParagraph1').hidden=true;
+        }
+        if (skip!==2){
+            document.getElementById('toggledParagraph2').hidden=true;
+        }
+        if (skip!==3){
+            document.getElementById('toggledParagraph3').hidden=true;
+        }
+        if (skip!==4){
+            document.getElementById('toggledParagraph4').hidden=true;
+        }
+        if (skip!==5){    
+            document.getElementById('toggledParagraph5').hidden=true;
+        }
+    }
   document.getElementById('toggleButton').addEventListener('click', e => {
     e.preventDefault();
+    hideAll(0);
     document.getElementById('toggledParagraph').toggleAttribute('hidden');
   });
 
   document.getElementById('toggleButton1').addEventListener('click', e => {
     e.preventDefault();
+    hideAll(1);
     document.getElementById('toggledParagraph1').toggleAttribute('hidden');
   });
 
   document.getElementById('toggleButton2').addEventListener('click', e => {
     e.preventDefault();
+    hideAll(2);
     document.getElementById('toggledParagraph2').toggleAttribute('hidden');
   });
 
   document.querySelectorAll('.toggleButton3').forEach(area => {
     area.addEventListener('click', e => {
       e.preventDefault();
+      hideAll(3);
       document
         .getElementById('toggledParagraph3')
         .toggleAttribute('hidden');
@@ -112,6 +136,7 @@
   document.querySelectorAll('.toggleButton4').forEach(area => {
     area.addEventListener('click', e => {
       e.preventDefault();
+      hideAll(4);
       document
       .getElementById('toggledParagraph4')
       .toggleAttribute('hidden');
@@ -120,6 +145,7 @@
 
 document.getElementById('toggleButton5').addEventListener('click', e => {
     e.preventDefault();
+    hideAll(5);
     document.getElementById('toggledParagraph5').toggleAttribute('hidden');
   });
 
