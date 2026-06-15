@@ -187,7 +187,7 @@ async function runBackgroundLoop() {
       if ((shadowX-40<x)&&(shadowX+40>x)&&(shadowY-18<y)&&(shadowY+18>y)) {
         score=score-1; randomizeHoop(); 
     x=0; y=gameArea.offsetHeight-40; shadowX=gameArea.offsetWidth-40; shadowY=gameArea.offsetHeight-30;
-   document.getElementById("playerScore").textContent=score;
+   document.getElementById("playerScore").textContent=score; planeRefresh();
       }
       
       ShadowPlane.style.left = shadowX + "px";
